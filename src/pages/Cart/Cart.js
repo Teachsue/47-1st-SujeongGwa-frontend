@@ -11,7 +11,7 @@ const Cart = () => {
   const token = localStorage.getItem('TOKEN');
 
   useEffect(() => {
-    fetch('http://10.58.52.156:3000/carts', {
+    fetch('http://192.168.219.100:3000/carts', {
       method: 'GET',
       headers: {
         authorization: token,
@@ -37,7 +37,7 @@ const Cart = () => {
       productId: item.productId,
       quantity: item.count,
     }));
-    fetch('http://10.58.52.156:3000/carts', {
+    fetch('http://192.168.219.100:3000/carts', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const Cart = () => {
     setTotalWeight(calculateTotalWeight(newItems));
     setTotalPrice(calculateTotalPrice(newItems));
 
-    fetch('http://10.58.52.156:3000/carts', {
+    fetch('http://192.168.219.100:3000/carts', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
