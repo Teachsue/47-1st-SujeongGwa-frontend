@@ -33,7 +33,7 @@ const Order = () => {
   };
 
   useEffect(() => {
-    fetch(`http://192.168.219.100:3000/carts`, {
+    fetch(`http://172.30.11.173:3000/carts`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -68,7 +68,7 @@ const Order = () => {
   };
 
   const postProduct = () => {
-    fetch(`http://192.168.219.100:3000/orders`, {
+    fetch(`http://172.30.11.173:3000/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
