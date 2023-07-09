@@ -3,7 +3,7 @@ import './Order.scss';
 import OrderResult from '../OrderResult/OrderResult';
 
 const Order = () => {
-  const [items, setItems] = useState([]);
+  let [items, setItems] = useState([]);
   const [modal, setModal] = useState(false);
   const [inputValues, setInputValues] = useState({});
   const token = localStorage.getItem('TOKEN');
@@ -33,7 +33,7 @@ const Order = () => {
   };
 
   useEffect(() => {
-    fetch(`http://10.58.52.156:3000/carts`, {
+    fetch(`http://192.168.219.100:3000/carts`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -45,13 +45,18 @@ const Order = () => {
         setItems(data.data);
       });
   }, []);
-
   const totalWeight = items => {
-    return items?.reduce((acc, cur) => acc + Number(cur.weight), 0);
+    return items?.reduce(
+      (acc, cur) => acc + Number(cur.weight) * Number(cur.quantity),
+      0
+    );
   };
 
   const totalPrice = items => {
-    return items?.reduce((acc, cur) => acc + Number(cur.price), 0);
+    return items?.reduce(
+      (acc, cur) => acc + Number(cur.price) * Number(cur.quantity),
+      0
+    );
   };
 
   const handleInputValue = e => {
@@ -63,7 +68,7 @@ const Order = () => {
   };
 
   const postProduct = () => {
-    fetch(`http://10.58.52.156:3000/orders`, {
+    fetch(`http://192.168.219.100:3000/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -73,10 +78,16 @@ const Order = () => {
         address: inputValues.address,
       }),
     }).then(res => {
+      // items.map(el => {
+      //   console.log(el.weight);
+      //   console.log(el.quantity);
+      // })
+      // console.log('items', items.weight);
       if (res.status === 200) {
+        console.log(setModal(true));
         setModal(true);
-      } else if (res.message === 'SUCCESS_CREATE_OREDER') {
-        alert('결제에 실패하였습니다.');
+      } else if (res.status === 402) {
+        alert('결제에 실패하였습니다. 결제 포인트가 부족합니다.');
       }
     });
   };

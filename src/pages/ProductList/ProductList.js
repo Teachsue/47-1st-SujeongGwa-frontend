@@ -18,7 +18,7 @@ const ProductList = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://10.58.52.156:3000/goods/category/${sub_category_id}`)
+    fetch(`http://192.168.219.100:3000/goods/category/${sub_category_id}`)
       .then(res => res.json())
       .then(data => {
         setProductListData(data.data);
